@@ -16,13 +16,13 @@ int moved(t_data *data, int pressed_key)
 	}
 	else if (pressed_key == A)
 	{
-		data->player.px -= data->player.planeX * PLAYER_SPEED;
-        data->player.py -= data->player.planeY * PLAYER_SPEED;
+		data->player.px -= data->player.plane_x * PLAYER_SPEED;
+        data->player.py -= data->player.plane_y * PLAYER_SPEED;
 	}
 	else if (pressed_key == D)
 	{
-		data->player.px += data->player.planeX * PLAYER_SPEED;
-        data->player.py += data->player.planeY * PLAYER_SPEED;
+		data->player.px += data->player.plane_x * PLAYER_SPEED;
+        data->player.py += data->player.plane_y * PLAYER_SPEED;
 	}
 	else
 		return (FAILURE);
@@ -38,8 +38,8 @@ int rotate(t_data *data, int pressed_key)
 	else
 		return (FAILURE);
 	data->player.pa = FixAng(data->player.pa);
-	data->player.planeX = cos(degToRad((data->player.pa - 90)));
-	data->player.planeY = sin((degToRad(data->player.pa - 90)));
+	data->player.plane_x = cos(degToRad((data->player.pa - 90)));
+	data->player.plane_y = sin((degToRad(data->player.pa - 90)));
 	data->player.pdx = cos(degToRad(data->player.pa));
 	data->player.pdy = sin(degToRad(data->player.pa));
 	return (SUCCESS);

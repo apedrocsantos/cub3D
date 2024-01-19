@@ -15,15 +15,15 @@ void	draw_textureLine(int drawStart, int drawEnd, t_data *data, t_camera *camera
 	int direction = getImgDirection(data, camera);
 	if (direction == ERROR)
 		return ;
-	line.texX = getTexX(data, camera);
-    line.step = 1.0 * data->cardinal_image[direction].height / camera->lineHeight;
-    line.texPos = (drawStart - INITIAL_YSIZE / 2 + camera->lineHeight / 2) * line.step;
+	line.tex_x = gettex_x(data, camera);
+    line.step = 1.0 * data->cardinal_image[direction].height / camera->line_height;
+    line.tex_pos = (drawStart - INITIAL_YSIZE / 2 + camera->line_height / 2) * line.step;
     while (drawStart++ < drawEnd)
     {
-        line.texY = (int)(line.texPos) & (data->cardinal_image[direction].height - 1);
-        line.texPos += line.step;
-		line.pos.px = line.texX;
-		line.pos.py = line.texY;
+        line.tex_y = (int)(line.tex_pos) & (data->cardinal_image[direction].height - 1);
+        line.tex_pos += line.step;
+		line.pos.px = line.tex_x;
+		line.pos.py = line.tex_y;
         int color = get_img_color(data->cardinal_image[direction], &(line.pos));
         // if(camera->side == 1)
 		// 	color = (color >> 1) & 8355711;
@@ -37,8 +37,8 @@ static void drawFloorAndCeiling(t_data *data, int x, int drawStart, int drawEnd)
 	int C;
 	int i;
 
-	F = create_trgb(0, data->F->R, data->F->G, data->F->B);
-	C = create_trgb(0, data->C->R, data->C->G, data->C->B);
+	F = create_trgb(0, data->floor->red, data->floor->green, data->floor->blue);
+	C = create_trgb(0, data->ceiling->red, data->ceiling->green, data->ceiling->blue);
 	i = 0;
 	while (i++ < drawStart)
 		my_mlx_pixel_put(data, x, i, C);
@@ -66,17 +66,17 @@ int draw_stuff(t_data *data, int x, t_camera *camera)
 	int drawStart;
 	int drawEnd;
 
-	drawStart = -camera->lineHeight / 2 + INITIAL_YSIZE / 2;
-	drawEnd = camera->lineHeight / 2 + INITIAL_YSIZE / 2;
+	drawStart = -camera->line_height / 2 + INITIAL_YSIZE / 2;
+	drawEnd = camera->line_height / 2 + INITIAL_YSIZE / 2;
     if (drawStart < 0)
         drawStart = 0;
     if (drawEnd >= INITIAL_YSIZE)
         drawEnd = INITIAL_YSIZE - 1;
     if (camera->side == 0)
-		camera->wallX = data->player.py + camera->perpWallDist * camera->rayDirY;
+		camera->wall_x = data->player.py + camera->perp_wall_dist * camera->ray_dir_y;
     else
-		camera->wallX = data->player.px + camera->perpWallDist * camera->rayDirX;
-    camera->wallX -= floor((camera->wallX));
+		camera->wall_x = data->player.px + camera->perp_wall_dist * camera->ray_dir_x;
+    camera->wall_x -= floor((camera->wall_x));
 	drawFloorAndCeiling(data,x, drawStart, drawEnd);
 	draw_textureLine(drawStart, drawEnd, data, camera, x);
 	return (SUCCESS);

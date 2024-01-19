@@ -17,13 +17,13 @@ int validMove(t_data *data, int pressed_key)
     }
     else if (pressed_key == A)
     {
-        x = (data->player.px - data->player.planeX * PLAYER_SPEED);
-        y = (data->player.py - data->player.planeY * PLAYER_SPEED);
+        x = (data->player.px - data->player.plane_x * PLAYER_SPEED);
+        y = (data->player.py - data->player.plane_y * PLAYER_SPEED);
     }
     else if (pressed_key == D)
     {
-        x = (data->player.px + data->player.planeX * PLAYER_SPEED);
-        y = (data->player.py + data->player.planeY * PLAYER_SPEED);
+        x = (data->player.px + data->player.plane_x * PLAYER_SPEED);
+        y = (data->player.py + data->player.plane_y * PLAYER_SPEED);
     }
     else
         return (FAILURE);
@@ -44,22 +44,22 @@ void render_map(t_data *data)
     // draw_sky(data);
     while (++x < INITIAL_XSIZE)
     {
-        camera.cameraX = 2 * x / (double)INITIAL_XSIZE - 1;
-        camera.rayDirX = data->player.pdx + data->player.planeX * camera.cameraX;
-        camera.rayDirY = data->player.pdy + data->player.planeY * camera.cameraX;
-        camera.mapX = (int)(data->player.px);
-        camera.mapY = (int)(data->player.py);
-        if (camera.rayDirX == 0)
-            camera.deltaDistX = 1e30;
+        camera.camera_x = 2 * x / (double)INITIAL_XSIZE - 1;
+        camera.ray_dir_x = data->player.pdx + data->player.plane_x * camera.camera_x;
+        camera.ray_dir_y = data->player.pdy + data->player.plane_y * camera.camera_x;
+        camera.map_x = (int)(data->player.px);
+        camera.map_y = (int)(data->player.py);
+        if (camera.ray_dir_x == 0)
+            camera.delta_dist_x = 1e30;
         else
-            camera.deltaDistX = fabs(1 / camera.rayDirX);
-        if (camera.rayDirY == 0)
-            camera.deltaDistY = 1e30;
+            camera.delta_dist_x = fabs(1 / camera.ray_dir_x);
+        if (camera.ray_dir_y == 0)
+            camera.delta_dist_y = 1e30;
         else
-            camera.deltaDistY = fabs(1 / camera.rayDirY);
+            camera.delta_dist_y = fabs(1 / camera.ray_dir_y);
         calcSideDist(&camera, data);
         searchHit(hit, &camera, data);
-        camera.lineHeight = (INITIAL_YSIZE / camera.perpWallDist);
+        camera.line_height = (INITIAL_YSIZE / camera.perp_wall_dist);
         draw_stuff(data, x, &camera);
     }
     draw_crosshair(data);

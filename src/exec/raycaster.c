@@ -13,8 +13,8 @@ int init_raycaster(t_data *data)
     else
         leave_on_error(data, "Invalid player direction");
     data->player.pdx = cos(degToRad(data->player.pa));
-    data->player.planeX = cos(degToRad(data->player.pa - (90)));
-    data->player.planeY = sin(degToRad(data->player.pa - (90)));
+    data->player.plane_x = cos(degToRad(data->player.pa - (90)));
+    data->player.plane_y = sin(degToRad(data->player.pa - (90)));
     data->player.pdy = sin(degToRad(data->player.pa));
     return (SUCCESS);
 }

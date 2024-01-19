@@ -1,29 +1,29 @@
 #include "../includes/cub3D.h"
 
-int getTexX(t_data *data, t_camera *camera)
+int gettex_x(t_data *data, t_camera *camera)
 {
-    int texX;
+    int tex_x;
 
-    texX = (int)(camera->wallX * (double)(data->cardinal_image[0].width));
-    if(camera->side == 0 && camera->rayDirX > 0)
-		texX = data->cardinal_image[0].width - texX - 1;
-    if(camera->side == 1 && camera->rayDirY < 0)
-		texX = data->cardinal_image[0].width - texX - 1;
-    return (texX);
+    tex_x = (int)(camera->wall_x * (double)(data->cardinal_image[0].width));
+    if(camera->side == 0 && camera->ray_dir_x > 0)
+		tex_x = data->cardinal_image[0].width - tex_x - 1;
+    if(camera->side == 1 && camera->ray_dir_y < 0)
+		tex_x = data->cardinal_image[0].width - tex_x - 1;
+    return (tex_x);
 }
 
 int getImgDirection(t_data *data, t_camera *camera)
 {
     if (camera->side == 1)
     {
-        if (data->player.py > camera->mapY)
+        if (data->player.py > camera->map_y)
             return WEST;
         else
             return EAST;
     }
     else
     {
-        if (data->player.px > camera->mapX)
+        if (data->player.px > camera->map_x)
             return NORTH;
         else
             return SOUTH;

@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:37:55 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 19:00:36 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/19 20:22:15 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,44 +53,4 @@ void	free_map(char **map)
 	while (map[i])
 		free(map[i++]);
 	free(map);
-}
-
-void	free_data(t_data *data)
-{
-	if (data->cardinal_image[NORTH].path)
-		free(data->cardinal_image[NORTH].path);
-	if (data->cardinal_image[SOUTH].path)
-		free(data->cardinal_image[SOUTH].path);
-	if (data->cardinal_image[WEST].path)
-		free(data->cardinal_image[WEST].path);
-	if (data->cardinal_image[EAST].path)
-		free(data->cardinal_image[EAST].path);
-	if (data->cardinal_image)
-		free(data->cardinal_image);
-	if (data->C)
-		free(data->C);
-	if (data->F)
-		free(data->F);
-	if (data->map)
-		free_map(data->map);
-}
-
-void	print_data(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	printf("NO: {%s}\n", data->cardinal_image[NORTH].path);
-	printf("SO: {%s}\n", data->cardinal_image[SOUTH].path);
-	printf("WE: {%s}\n", data->cardinal_image[WEST].path);
-	printf("EA: {%s}\n", data->cardinal_image[EAST].path);
-	if (data->F)
-		printf("F: {%d,%d,%d}\n", data->F->R, data->F->G, data->F->B);
-	if (data->C)
-		printf("C: {%d,%d,%d}\n", data->C->R, data->C->G, data->C->B);
-	if (data->map && data->map[i])
-	{
-		while (data->map[i])
-			printf("{%s}\n", data->map[i++]);
-	}
 }

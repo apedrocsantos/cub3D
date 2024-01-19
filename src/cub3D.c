@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:39:53 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 18:59:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/19 20:17:42 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	init_data(t_data *data)
 {
-	data->C = NULL;
-	data->F = NULL;
+	data->ceiling = NULL;
+	data->floor = NULL;
 	data->map = NULL;
 	data->cardinal_image = ft_calloc(4, sizeof(t_cardinal_image));
 	data->cardinal_image[NORTH].path = NULL;
@@ -29,7 +29,7 @@ void	init_data(t_data *data)
 int	main(int ac, char **av)
 {
 	t_data	data;
-	int fd;
+	int		fd;
 
 	if (ac != 2)
 		return (print_error("Try ./cub3D path/to/map.cub", NULL));
@@ -45,7 +45,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	close(fd);
-	if (check_extensions(&data) || map_check(&data, -1, -1))
+	if (check_extensions(data.cardinal_image) || map_check(&data, -1, -1))
 	{
 		free_data(&data);
 		return (1);

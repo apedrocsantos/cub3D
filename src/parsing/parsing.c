@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 18:59:10 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/19 20:20:51 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_rgb	*check_rgb(char *str)
 		return (NULL);
 	}
 	rgb = malloc(sizeof(t_rgb));
-	rgb->R = ft_atoi(arr[0]);
-	rgb->G = ft_atoi(arr[1]);
-	rgb->B = ft_atoi(arr[2]);
+	rgb->red = ft_atoi(arr[0]);
+	rgb->green = ft_atoi(arr[1]);
+	rgb->blue = ft_atoi(arr[2]);
 	free_str_arr(arr);
 	return (rgb);
 }
@@ -63,10 +63,10 @@ int	get_file_path(t_data *data, char *line)
 		data->cardinal_image[WEST].path = check_path(&line[3]);
 	else if (!ft_strncmp(line, "EA ", 3) && !data->cardinal_image[EAST].path)
 		data->cardinal_image[EAST].path = check_path(&line[3]);
-	else if (!ft_strncmp(line, "F ", 2) && !data->F)
-		data->F = check_rgb(&line[2]);
-	else if (!ft_strncmp(line, "C ", 2) && !data->C)
-		data->C = check_rgb(&line[2]);
+	else if (!ft_strncmp(line, "F ", 2) && !data->floor)
+		data->floor = check_rgb(&line[2]);
+	else if (!ft_strncmp(line, "C ", 2) && !data->ceiling)
+		data->ceiling = check_rgb(&line[2]);
 	else
 	{
 		print_error("Duplicate values.", NULL);
@@ -75,7 +75,7 @@ int	get_file_path(t_data *data, char *line)
 	return (0);
 }
 
-int	check_line(t_data *data, char *line)
+int	check_line(t_data *data, char *line, t_cardinal_image *img)
 {
 	int	i;
 
@@ -91,8 +91,8 @@ int	check_line(t_data *data, char *line)
 			if (get_file_path(data, &line[i]))
 				return (1);
 		}
-		else if (!data->cardinal_image[NORTH].path || !data->cardinal_image[SOUTH].path || !data->cardinal_image[EAST].path || !data->cardinal_image[WEST].path || !data->C
-			|| !data->F)
+		else if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
+			|| !img[WEST].path || !data->ceiling || !data->floor)
 			return (print_error("Invalid cub settings. Check rules.", NULL));
 		else
 			return (2);
@@ -115,7 +115,7 @@ int	read_cub(t_data *data, int fd)
 		return (1);
 	while (line)
 	{
-		a = check_line(data, line);
+		a = check_line(data, line, data->cardinal_image);
 		if (a == 2)
 		{
 			if (get_map(line, fd, data, ft_strdup(line)))
