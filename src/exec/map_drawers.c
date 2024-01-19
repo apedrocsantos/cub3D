@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_drawers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:59 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:42:19 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/19 20:49:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	draw_texture_line(int draw_start, int draw_end, t_data *data,
 	int		direction;
 	int		color;
 
-	direction = getImgDirection(data, camera);
+	direction = get_img_direction(data, camera);
 	if (direction == ERROR)
 		return ;
 	line.tex_x = gettex_x(data, camera);
@@ -102,6 +102,6 @@ int	draw_stuff(t_data *data, int x, t_camera *camera)
 			* camera->ray_dir_x;
 	camera->wall_x -= floor((camera->wall_x));
 	draw_floor_and_ceiling(data, x, draw_start, draw_end);
-	draw_textureLine(draw_start, draw_end, data, camera, x);
+	draw_texture_line(draw_start, draw_end, data, camera, x);
 	return (SUCCESS);
 }

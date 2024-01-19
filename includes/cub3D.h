@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:46:56 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/19 20:49:45 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,5 +193,5 @@ void					render_map(t_data *data);
 int						draw_stuff(t_data *data, int x, t_camera *camera);
 int						render_map_all(t_data *data);
 int						gettex_x(t_data *data, t_camera *camera);
-int						getImgDirection(t_data *data, t_camera *camera);
+int						get_img_direction(t_data *data, t_camera *camera);
 #endif
