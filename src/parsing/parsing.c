@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:20:51 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/19 20:47:22 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	check_line(t_data *data, char *line, t_cardinal_image *img)
  * Reads each line of the cub file.
  * check_line function checks if NO, SO< WE, EA, F and C exist and stores them.
  * If all values are valid, check_line returns 2, and get_map begins.
-*/
+ */
 int	read_cub(t_data *data, int fd)
 {
 	char	*line;

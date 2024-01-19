@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:22:40 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/19 20:46:56 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,15 +178,15 @@ int						load_img(t_data *data, t_cardinal_image *img,
 int						load_cardinal_images(t_data *data);
 int						init_frame(t_data *data);
 void					my_mlx_pixel_put(t_data *data, int x, int y, int color);
-double					FixAng(double a);
-double					degToRad(double a);
-double					squareOf(double number);
-double					absoluteOf(double number);
+double					fix_ang(double a);
+double					deg_to_rad(double a);
+double					square_of(double number);
+double					absolute_of(double number);
 int						close_success(t_data *data);
 int						init_raycaster(t_data *data);
-void					searchHit(int hit, t_camera *camera, t_data *data);
-void					calcSideDist(t_camera *camera, t_data *data);
-int						validMove(t_data *data, int pressed_key);
+void					search_hit(int hit, t_camera *camera, t_data *data);
+void					calc_side_dist(t_camera *camera, t_data *data);
+int						valid_move(t_data *data, int pressed_key);
 ///
 int						draw_crosshair(t_data *data);
 void					render_map(t_data *data);

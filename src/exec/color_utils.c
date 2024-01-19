@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/19 20:27:46 by anda-cun          #+#    #+#             */
+/*   Updated: 2024/01/19 20:29:30 by anda-cun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D.h"
 
 int	create_trgb(int t, int r, int g, int b)
@@ -7,14 +19,11 @@ int	create_trgb(int t, int r, int g, int b)
 
 int	get_img_color(t_cardinal_image img, t_player *pos)
 {
-	// printf("%f %f\n", pos->px, pos->py);
-	if (pos->px >= 0 && pos->px < img.width
-		&& pos->py >= 0 && pos->py < img.height)
+	if (pos->px >= 0 && pos->px < img.width && pos->py >= 0
+		&& pos->py < img.height)
 	{
-		return (*(int*)(img.addr
-			+ (4 * img.width * (int)pos->py)
-			+ (4 * (int)pos->px)));
+		return (*(int *)(img.addr + (4 * img.width * (int)pos->py) + (4
+				* (int)pos->px)));
 	}
-	// printf("Error\n");
 	return (0x0);
 }

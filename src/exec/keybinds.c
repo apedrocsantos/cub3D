@@ -1,47 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keybinds.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/19 20:27:56 by anda-cun          #+#    #+#             */
+/*   Updated: 2024/01/19 20:46:56 by anda-cun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D.h"
 
-int moved(t_data *data, int pressed_key)
+int	moved(t_data *data, int pressed_key)
 {
-	if (validMove(data, pressed_key))
+	if (valid_move(data, pressed_key))
 		return (FAILURE);
 	if (pressed_key == W)
 	{
-		data->player.px+=data->player.pdx * PLAYER_SPEED;
-		data->player.py+=data->player.pdy * PLAYER_SPEED;
+		data->player.px += data->player.pdx * PLAYER_SPEED;
+		data->player.py += data->player.pdy * PLAYER_SPEED;
 	}
 	else if (pressed_key == S)
 	{
-		data->player.px-=data->player.pdx * PLAYER_SPEED;
-		data->player.py-=data->player.pdy * PLAYER_SPEED;
+		data->player.px -= data->player.pdx * PLAYER_SPEED;
+		data->player.py -= data->player.pdy * PLAYER_SPEED;
 	}
 	else if (pressed_key == A)
 	{
 		data->player.px -= data->player.plane_x * PLAYER_SPEED;
-        data->player.py -= data->player.plane_y * PLAYER_SPEED;
+		data->player.py -= data->player.plane_y * PLAYER_SPEED;
 	}
 	else if (pressed_key == D)
 	{
 		data->player.px += data->player.plane_x * PLAYER_SPEED;
-        data->player.py += data->player.plane_y * PLAYER_SPEED;
+		data->player.py += data->player.plane_y * PLAYER_SPEED;
 	}
 	else
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-int rotate(t_data *data, int pressed_key)
+int	rotate(t_data *data, int pressed_key)
 {
 	if (pressed_key == LEFT)
-		data->player.pa+=CAMERA_SPEED;
+		data->player.pa += CAMERA_SPEED;
 	else if (pressed_key == RIGHT)
-		data->player.pa-=CAMERA_SPEED;
+		data->player.pa -= CAMERA_SPEED;
 	else
 		return (FAILURE);
-	data->player.pa = FixAng(data->player.pa);
-	data->player.plane_x = cos(degToRad((data->player.pa - 90)));
-	data->player.plane_y = sin((degToRad(data->player.pa - 90)));
-	data->player.pdx = cos(degToRad(data->player.pa));
-	data->player.pdy = sin(degToRad(data->player.pa));
+	data->player.pa = fix_ang(data->player.pa);
+	data->player.plane_x = cos(deg_to_rad((data->player.pa - 90)));
+	data->player.plane_y = sin((deg_to_rad(data->player.pa - 90)));
+	data->player.pdx = cos(deg_to_rad(data->player.pa));
+	data->player.pdy = sin(deg_to_rad(data->player.pa));
 	return (SUCCESS);
 }
 
@@ -51,7 +63,7 @@ int	key_func(int key, t_data *data)
 		close_success(data);
 	if (key == XK_w || key == XK_Up)
 		moved(data, W);
-    else if (key == XK_s || key == XK_Down)
+	else if (key == XK_s || key == XK_Down)
 		moved(data, S);
 	else if (key == XK_a)
 		moved(data, A);
@@ -59,7 +71,7 @@ int	key_func(int key, t_data *data)
 		moved(data, D);
 	else if (key == XK_Left)
 		rotate(data, LEFT);
-    else if (key == XK_Right)
+	else if (key == XK_Right)
 		rotate(data, RIGHT);
 	else
 		return (FAILURE);
