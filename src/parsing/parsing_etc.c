@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_etc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:14:26 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/11/13 11:47:46 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:59:10 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ int check_xpm(t_data *data)
 {
 	int fd;
 
-	fd = open(data->NO, O_RDONLY);
+	fd = open(data->cardinal_image[NORTH].path, O_RDONLY);
 	if (fd != -1)
 		close(fd);
 	else
 		return (1);
-	fd = open(data->SO, O_RDONLY);
+	fd = open(data->cardinal_image[SOUTH].path, O_RDONLY);
 	if (fd != -1)
 		close(fd);
 	else
 		return (1);
-	fd = open(data->EA, O_RDONLY);
+	fd = open(data->cardinal_image[EAST].path, O_RDONLY);
 	if (fd != -1)
 		close(fd);
 	else
 		return (1);
-	fd = open(data->WE, O_RDONLY);
+	fd = open(data->cardinal_image[WEST].path, O_RDONLY);
 	if (fd != -1)
 		close(fd);
 	else
@@ -61,13 +61,13 @@ int	check_extensions(t_data *data)
 {
 	if (check_xpm(data))
 		return (print_error("Can't access xpm file.", NULL));
-	if (check_ext(data->NO, ".xpm"))
-		return (print_error("Wrong file extension: ", data->NO));
-	if (check_ext(data->SO, ".xpm"))
-		return (print_error("Wrong file extension: ", data->SO));
-	if (check_ext(data->WE, ".xpm"))
-		return (print_error("Wrong file extension: ", data->WE));
-	if (check_ext(data->EA, ".xpm"))
-		return (print_error("Wrong file extension: ", data->EA));
+	if (check_ext(data->cardinal_image[NORTH].path, ".xpm"))
+		return (print_error("Wrong file extension: ", data->cardinal_image[NORTH].path));
+	if (check_ext(data->cardinal_image[SOUTH].path, ".xpm"))
+		return (print_error("Wrong file extension: ", data->cardinal_image[SOUTH].path));
+	if (check_ext(data->cardinal_image[WEST].path, ".xpm"))
+		return (print_error("Wrong file extension: ", data->cardinal_image[WEST].path));
+	if (check_ext(data->cardinal_image[EAST].path, ".xpm"))
+		return (print_error("Wrong file extension: ", data->cardinal_image[EAST].path));
 	return (0);
 }

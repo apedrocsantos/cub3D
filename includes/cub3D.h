@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/11/17 15:57:51 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/19 19:00:06 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,13 @@ typedef struct s_line
 typedef struct s_data
 {
 	char				*file;
-	char				*NO; //to optimize
-	char				*SO; //to optimize
-	char				*WE; //to optimize
-	char				*EA; //to optimize
 	t_rgb				*F;
 	t_rgb				*C;
 	char				**map;
 	int					nb_of_map_lines;
 	void				*mlx;
 	void				*win;
-	t_cardinal_image	*cardinal_image; //to optimize
+	t_cardinal_image	*cardinal_image;
 	t_main_image		current_img;
 	t_player			player;
 	t_camera 			camera;

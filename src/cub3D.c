@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:39:53 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/11/17 15:54:55 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:59:16 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 
 void	init_data(t_data *data)
 {
-	data->EA = NULL;
-	data->NO = NULL;
-	data->SO = NULL;
-	data->WE = NULL;
 	data->C = NULL;
 	data->F = NULL;
 	data->map = NULL;
+	data->cardinal_image = ft_calloc(4, sizeof(t_cardinal_image));
+	data->cardinal_image[NORTH].path = NULL;
+	data->cardinal_image[SOUTH].path = NULL;
+	data->cardinal_image[EAST].path = NULL;
+	data->cardinal_image[WEST].path = NULL;
 }
 
 int	main(int ac, char **av)

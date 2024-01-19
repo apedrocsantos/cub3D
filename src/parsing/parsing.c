@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/11/13 15:35:48 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:59:10 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ char	*check_path(char *str)
 
 int	get_file_path(t_data *data, char *line)
 {
-	if (!ft_strncmp(line, "NO ", 3) && !data->NO)
-		data->NO = check_path(&line[3]);
-	else if (!ft_strncmp(line, "SO ", 3) && !data->SO)
-		data->SO = check_path(&line[3]);
-	else if (!ft_strncmp(line, "WE ", 3) && !data->WE)
-		data->WE = check_path(&line[3]);
-	else if (!ft_strncmp(line, "EA ", 3) && !data->EA)
-		data->EA = check_path(&line[3]);
+	if (!ft_strncmp(line, "NO ", 3) && !data->cardinal_image[NORTH].path)
+		data->cardinal_image[NORTH].path = check_path(&line[3]);
+	else if (!ft_strncmp(line, "SO ", 3) && !data->cardinal_image[SOUTH].path)
+		data->cardinal_image[SOUTH].path = check_path(&line[3]);
+	else if (!ft_strncmp(line, "WE ", 3) && !data->cardinal_image[WEST].path)
+		data->cardinal_image[WEST].path = check_path(&line[3]);
+	else if (!ft_strncmp(line, "EA ", 3) && !data->cardinal_image[EAST].path)
+		data->cardinal_image[EAST].path = check_path(&line[3]);
 	else if (!ft_strncmp(line, "F ", 2) && !data->F)
 		data->F = check_rgb(&line[2]);
 	else if (!ft_strncmp(line, "C ", 2) && !data->C)
@@ -91,7 +91,7 @@ int	check_line(t_data *data, char *line)
 			if (get_file_path(data, &line[i]))
 				return (1);
 		}
-		else if (!data->NO || !data->SO || !data->EA || !data->WE || !data->C
+		else if (!data->cardinal_image[NORTH].path || !data->cardinal_image[SOUTH].path || !data->cardinal_image[EAST].path || !data->cardinal_image[WEST].path || !data->C
 			|| !data->F)
 			return (print_error("Invalid cub settings. Check rules.", NULL));
 		else

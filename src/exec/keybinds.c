@@ -75,7 +75,6 @@ int	close_window(t_data *data, char *error, int rtn)
 	mlx_destroy_image(data->mlx, data->cardinal_image[SOUTH].img);
 	mlx_destroy_image(data->mlx, data->cardinal_image[EAST].img);
 	mlx_destroy_image(data->mlx, data->cardinal_image[WEST].img);
-	free(data->cardinal_image);
 	if (data->mlx != NULL && data->win != NULL)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)

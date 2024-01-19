@@ -23,11 +23,10 @@ int	load_img(t_data *data, t_cardinal_image *img, char *path)
 int load_cardinal_images(t_data *data) //to optimize when retrieving in parsing directly to the
 										//cardinal images instead of NO SO EA WE
 {
-	data->cardinal_image = ft_calloc(4, sizeof(t_cardinal_image));
-	load_img(data, &(data->cardinal_image[NORTH]), data->NO);
-	load_img(data, &(data->cardinal_image[SOUTH]), data->SO);
-	load_img(data, &(data->cardinal_image[EAST]), data->EA);
-	load_img(data, &(data->cardinal_image[WEST]), data->WE);
+	load_img(data, &(data->cardinal_image[NORTH]), data->cardinal_image[NORTH].path);
+	load_img(data, &(data->cardinal_image[SOUTH]), data->cardinal_image[SOUTH].path);
+	load_img(data, &(data->cardinal_image[EAST]), data->cardinal_image[EAST].path);
+	load_img(data, &(data->cardinal_image[WEST]), data->cardinal_image[WEST].path);
 	return (SUCCESS);
 }
 
