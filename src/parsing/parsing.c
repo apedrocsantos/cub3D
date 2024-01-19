@@ -1,0 +1,131 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anda-cun <anda-cun@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
+/*   Updated: 2023/11/13 15:35:48 by anda-cun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3D.h"
+
+t_rgb	*check_rgb(char *str)
+{
+	int		i;
+	char	**arr;
+	t_rgb	*rgb;
+
+	i = 0;
+	arr = ft_split(str, ',');
+	while (arr[i])
+		i++;
+	if (i != 3 || !check_values(arr))
+	{
+		free_str_arr(arr);
+		return (NULL);
+	}
+	rgb = malloc(sizeof(t_rgb));
+	rgb->R = ft_atoi(arr[0]);
+	rgb->G = ft_atoi(arr[1]);
+	rgb->B = ft_atoi(arr[2]);
+	free_str_arr(arr);
+	return (rgb);
+}
+
+char	*check_path(char *str)
+{
+	char	*new;
+	int		i;
+
+	i = 0;
+	new = ft_strtrim(str, "\f\r\t\v ");
+	while (new[i] && !ft_strchr("\f\r\t\v ", new[i]))
+		i++;
+	while (new[i] && new[i] == ' ')
+		i++;
+	if (!new[i])
+		return (new);
+	free(new);
+	print_error("Invalid path.", NULL);
+	return (NULL);
+}
+
+int	get_file_path(t_data *data, char *line)
+{
+	if (!ft_strncmp(line, "NO ", 3) && !data->NO)
+		data->NO = check_path(&line[3]);
+	else if (!ft_strncmp(line, "SO ", 3) && !data->SO)
+		data->SO = check_path(&line[3]);
+	else if (!ft_strncmp(line, "WE ", 3) && !data->WE)
+		data->WE = check_path(&line[3]);
+	else if (!ft_strncmp(line, "EA ", 3) && !data->EA)
+		data->EA = check_path(&line[3]);
+	else if (!ft_strncmp(line, "F ", 2) && !data->F)
+		data->F = check_rgb(&line[2]);
+	else if (!ft_strncmp(line, "C ", 2) && !data->C)
+		data->C = check_rgb(&line[2]);
+	else
+	{
+		print_error("Duplicate values.", NULL);
+		return (1);
+	}
+	return (0);
+}
+
+int	check_line(t_data *data, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i])
+	{
+		if (!strncmp(&line[i], "NO ", 3) || !strncmp(&line[i], "SO ", 3)
+			|| !strncmp(&line[i], "WE ", 3) || !strncmp(&line[i], "EA ", 3)
+			|| !strncmp(&line[i], "F ", 2) || !strncmp(&line[i], "C ", 2))
+		{
+			if (get_file_path(data, &line[i]))
+				return (1);
+		}
+		else if (!data->NO || !data->SO || !data->EA || !data->WE || !data->C
+			|| !data->F)
+			return (print_error("Invalid cub settings. Check rules.", NULL));
+		else
+			return (2);
+	}
+	return (0);
+}
+
+/*
+ * Reads each line of the cub file.
+ * check_line function checks if NO, SO< WE, EA, F and C exist and stores them.
+ * If all values are valid, check_line returns 2, and get_map begins.
+*/
+int	read_cub(t_data *data, int fd)
+{
+	char	*line;
+	int		a;
+
+	line = open_cub(fd);
+	if (!line)
+		return (1);
+	while (line)
+	{
+		a = check_line(data, line);
+		if (a == 2)
+		{
+			if (get_map(line, fd, data, ft_strdup(line)))
+				return (1);
+		}
+		if (a != 2)
+			free(line);
+		if (a)
+			return (a);
+		line = get_next_line(fd);
+	}
+	return (0);
+}
