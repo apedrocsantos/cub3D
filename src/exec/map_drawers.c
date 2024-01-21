@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:59 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:49:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/21 23:55:32 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,20 @@ void	draw_texture_line(int draw_start, int draw_end, t_data *data,
 	}
 }
 
-static void	draw_floor_and_ceiling(t_data *data, int x, int draw_start, int draw_end)
+static void	draw_floor_and_ceiling(t_data *data, int x, int draw_s, int draw_e)
 {
 	int	floor;
 	int	ceiling;
 	int	i;
 
-	floor = create_trgb(0, data->floor->red, data->floor->green, data->floor->blue);
+	floor = create_trgb(0, data->floor->red, data->floor->green,
+			data->floor->blue);
 	ceiling = create_trgb(0, data->ceiling->red, data->ceiling->green,
 			data->ceiling->blue);
 	i = 0;
-	while (i++ < draw_start)
+	while (i++ < draw_s)
 		my_mlx_pixel_put(data, x, i, ceiling);
-	i = draw_end;
+	i = draw_e;
 	while (i++ < INITIAL_YSIZE)
 		my_mlx_pixel_put(data, x, i, floor);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:11:40 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:37:53 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 23:53:01 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	valid_number(char *str)
 	int	i;
 	int	nb_len;
 
-	i = -1;
 	nb_len = 0;
 	if (!str)
 		return (ERROR);
@@ -77,7 +76,7 @@ int	check_values(char **arr)
  * Reopens the .cub file and finds the first line of the map.
  * Then adds each line to the string array.
  */
-int	store_map(char *first_line, t_data *data)
+void	store_map(char *first_line, t_data *data)
 {
 	char	*line;
 	int		i;
@@ -104,7 +103,6 @@ int	store_map(char *first_line, t_data *data)
 	}
 	free(line);
 	close(fd);
-	return (0);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:41:02 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 23:42:59 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Split string at commas. Check if nb_substrings is 3 (RGB). Check the values of
 each string and assign them to the corresponding data field.
 */
 
-t_rgb	*check_rgb(char *arr*)
+t_rgb	*check_rgb(char **arr)
 {
 	int		i;
 	t_rgb	*rgb;
@@ -89,7 +89,7 @@ int	get_file_path(t_data *data, char *line)
 	}
 	else if (!ft_strncmp(line, "C ", 2) && !data->ceiling)
 	{
-		data->ceiling = check_rgb(&line[2]);
+		data->ceiling = check_rgb(ft_split(&line[2], ','));
 		if (!data->ceiling)
 			return (ERROR);
 	}

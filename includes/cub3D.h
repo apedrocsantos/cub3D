@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 22:06:53 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/21 23:53:20 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int						get_map(char *line, t_data *data,
 int						valid_line(char *line);
 void					init_data_map(t_data *data, int line_nb, int line_len,
 							char *first_line);
-int						store_map(char *first_line, t_data *data);
+void						store_map(char *first_line, t_data *data);
 int						check_values(char **arr);
 int						check_extensions(t_cardinal_image *img);
 void					free_map(char **map);

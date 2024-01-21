@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:45:53 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:38:07 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 23:50:46 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,26 @@ int	get_map(char *line, t_data *data, char *first_line)
 	return (0);
 }
 
+int	find_chars(char *str, char *to_find)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (str[++i])
+	{
+		j = -1;
+		while (to_find[++j])
+		{
+			if (str[i] == to_find[j])
+				break ;
+		}
+		if (!to_find[j])
+			return (1);
+	}
+	return (0);
+}
+
 /**
  * Checks if first line and last line have chars different than '1' and ' '
  * While looping each line
@@ -54,7 +74,7 @@ int	map_check(t_data *data, int i, int j)
 	while (data->map[++i])
 	{
 		if (i == 0 || i == data->nb_of_map_lines - 1)
-			if (ft_strchr("1 ", &data->map[i]))
+			if (find_chars(data->map[i], "1 "))
 				return (print_error("Invalid map: map is open.", NULL));
 		j = -1;
 		while (data->map[i][++j])
