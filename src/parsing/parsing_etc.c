@@ -14,24 +14,25 @@
 
 int	check_xpm(t_cardinal_image *img)
 {
-	int fd;
+	int	fd;
+
 	fd = open(img[NORTH].path, O_RDONLY);
-	if (fd!= -1)
+	if (fd != -1)
 		close(fd);
 	else
 		return (1);
-	fd= open(img[SOUTH].path, O_RDONLY);
-	if (fd!= -1)
+	fd = open(img[SOUTH].path, O_RDONLY);
+	if (fd != -1)
 		close(fd);
 	else
 		return (1);
-	fd= open(img[EAST].path, O_RDONLY);
-	if (fd!= -1)
+	fd = open(img[EAST].path, O_RDONLY);
+	if (fd != -1)
 		close(fd);
 	else
 		return (1);
-	fd= open(img[WEST].path, O_RDONLY);
-	if (fd!= -1)
+	fd = open(img[WEST].path, O_RDONLY);
+	if (fd != -1)
 		close(fd);
 	else
 		return (1);

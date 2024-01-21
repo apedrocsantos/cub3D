@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:11:40 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:33:49 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/21 23:37:53 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
  * legth has to be <= 4 (to include possible '+').
  * Check first char for digit or '+'.
  * Check if all the other chars are numbers.
-*/
+ */
 
 int	valid_number(char *str)
 {
 	int	i;
-	int nb_len;
+	int	nb_len;
 
 	i = -1;
 	nb_len = 0;
@@ -51,19 +51,19 @@ int	valid_number(char *str)
 }
 
 /**
- * Ignore spaces. Check if string is a valid positive number and smaller than 255.
-*/
+* Ignore spaces. Check if string is a valid positive number and smaller than 255.
+ */
 
 int	check_values(char **arr)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = -1;
 	while (arr[++i])
 	{
 		j = 0;
-		while(ft_isspace(arr[i][j]))
+		while (ft_isspace(arr[i][j]))
 			j++;
 		if (!arr[i][j])
 			return (print_error("Missing RGB values.", NULL));
@@ -73,17 +73,16 @@ int	check_values(char **arr)
 	return (SUCCESS);
 }
 
-
 /**
  * Reopens the .cub file and finds the first line of the map.
  * Then adds each line to the string array.
-*/
+ */
 int	store_map(char *first_line, t_data *data)
 {
 	char	*line;
 	int		i;
 	int		j;
-	int fd;
+	int		fd;
 
 	i = 0;
 	fd = open(data->file, O_RDONLY);
@@ -109,9 +108,10 @@ int	store_map(char *first_line, t_data *data)
 }
 
 /**
- * Creates array of strings to store map, with max line length of map fond previously.
+ * Creates array of strings to store map,
+	with max line length of map fond previously.
  * Fills empty array with spaces.
-*/
+ */
 
 void	init_data_map(t_data *data, int line_nb, int line_len, char *first_line)
 {
@@ -129,7 +129,7 @@ void	init_data_map(t_data *data, int line_nb, int line_len, char *first_line)
 
 /**
  * Checks if line is valid (char "\f\r\t\v ").
-*/
+ */
 
 int	valid_line(char *line)
 {
@@ -143,6 +143,7 @@ int	valid_line(char *line)
 	free(check_empty);
 	while (line[++i])
 		if (!ft_strchr("10NSWE ", line[i]))
-			return (print_error("Invalid map: invalid character in map.", NULL));
+			return (print_error("Invalid map: invalid character in map.",
+					NULL));
 	return (0);
 }

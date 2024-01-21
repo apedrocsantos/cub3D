@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 21:04:49 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/21 23:41:02 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
 /*
-Split string at commas. Check if nb_substrings is 3 (RGB). Check the values of 
+Split string at commas. Check if nb_substrings is 3 (RGB). Check the values of
 each string and assign them to the corresponding data field.
 */
 
-t_rgb *check_rgb(char *str)
+t_rgb	*check_rgb(char *arr*)
 {
 	int		i;
-	char	**arr;
-	t_rgb *rgb;
+	t_rgb	*rgb;
 
 	i = 0;
-	arr = ft_split(str, ',');
 	while (arr[i])
 		i++;
 	if (i != 3)
@@ -49,8 +47,9 @@ t_rgb *check_rgb(char *str)
 }
 
 /*
-*Ignore spaces, check for multiple strings, if just one string, assign it to corresponding field.
-*/
+ *Ignore spaces, check for multiple strings, if just one string,
+	assign it to corresponding field.
+ */
 
 int	check_path(t_data *data, char *str, int dir)
 {
@@ -69,22 +68,22 @@ int	check_path(t_data *data, char *str, int dir)
 		return (SUCCESS);
 	}
 	free(new);
-	return(print_error("Invalid path.", str));
+	return (print_error("Invalid path.", str));
 }
 
 int	get_file_path(t_data *data, char *line)
 {
 	if (!ft_strncmp(line, "NO ", 3) && !data->cardinal_image[NORTH].path)
-		return(check_path(data, &line[3], NORTH));
+		return (check_path(data, &line[3], NORTH));
 	else if (!ft_strncmp(line, "SO ", 3) && !data->cardinal_image[SOUTH].path)
-		return(check_path(data, &line[3], SOUTH));
+		return (check_path(data, &line[3], SOUTH));
 	else if (!ft_strncmp(line, "WE ", 3) && !data->cardinal_image[WEST].path)
-		return(check_path(data, &line[3], WEST));
+		return (check_path(data, &line[3], WEST));
 	else if (!ft_strncmp(line, "EA ", 3) && !data->cardinal_image[EAST].path)
-		return(check_path(data, &line[3], EAST));
+		return (check_path(data, &line[3], EAST));
 	else if (!ft_strncmp(line, "F ", 2) && !data->floor)
 	{
-		data->floor = check_rgb(&line[2]);
+		data->floor = check_rgb(ft_split(&line[2], ','));
 		if (!data->floor)
 			return (ERROR);
 	}
@@ -95,15 +94,16 @@ int	get_file_path(t_data *data, char *line)
 			return (ERROR);
 	}
 	else
-		return(print_error("Duplicate values.", NULL));
+		return (print_error("Duplicate values.", NULL));
 	return (SUCCESS);
 }
 
 /**
  * Check each line for "NO ", "SO ", "EA ", "WE ", "F " and "C ", in any order.
- * If a different string is found and one or more of the fields is empty, returns error.
+ * If a different string is found and one or more of the fields is empty,
+	returns error.
  * Else, all fields are present, and returns 2.
-*/
+ */
 
 int	check_line(t_data *data, char *line, t_cardinal_image *img)
 {
@@ -119,7 +119,7 @@ int	check_line(t_data *data, char *line, t_cardinal_image *img)
 		|| !strncmp(&line[i], "F ", 2) || !strncmp(&line[i], "C ", 2))
 	{
 		if (get_file_path(data, &line[i]))
-			return(ERROR);
+			return (ERROR);
 	}
 	else if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
 		|| !img[WEST].path || !data->ceiling || !data->floor)
@@ -141,7 +141,7 @@ int	read_cub(t_data *data)
 
 	line = get_next_line(data->fd);
 	if (!line)
-		return(print_error("Empty file.", NULL));
+		return (print_error("Empty file.", NULL));
 	while (line)
 	{
 		a = check_line(data, line, data->cardinal_image);
@@ -154,10 +154,10 @@ int	read_cub(t_data *data)
 			free(line);
 		if (a != 0)
 		{
-			close(data->fd);	
+			close(data->fd);
 			return (a);
 		}
 		line = get_next_line(data->fd);
 	}
-	return(print_error("No map found in file.", NULL));
+	return (print_error("No map found in file.", NULL));
 }

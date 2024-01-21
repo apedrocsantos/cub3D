@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:45:53 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 22:09:00 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/21 23:38:07 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /**
  * If line contains valid characters, increment number of lines.
  * If current line length > previous line length, increase line length.
-*/
+ */
 
 int	get_map(char *line, t_data *data, char *first_line)
 {
-	int		line_len;
+	int	line_len;
 
 	data->nb_of_map_lines = 0;
 	line_len = 0;
@@ -45,8 +45,9 @@ int	get_map(char *line, t_data *data, char *first_line)
  * Checks if first line and last line have chars different than '1' and ' '
  * While looping each line
  * 		Checks if first char is different than '1' and ' '
- *		If current char is space, check next, previous, above and below character. If they are not '1', returns error.
-*/
+ *		If current char is space, check next, previous,
+			above and below character. If they are not '1', returns error.
+ */
 
 int	map_check(t_data *data, int i, int j)
 {
@@ -62,11 +63,11 @@ int	map_check(t_data *data, int i, int j)
 				return (print_error("Invalid map: map is open.", NULL));
 			if ((ft_isspace(data->map[i][j]) && j < (int)ft_strlen(data->map[i])
 				&& data->map[i][j + 1] && !ft_strchr("1 ", data->map[i][j
-					+ 1])) || (ft_isspace(data->map[i][j]) && j > 0
-				&& data->map[i][j - 1] && !ft_strchr("1 ", data->map[i][j
-					- 1])) || (ft_isspace(data->map[i][j])
-				&& i < data->nb_of_map_lines - 1 && data->map[i + 1][j]
-				&& !ft_strchr("1 ", data->map[i + 1][j]))
+						+ 1])) || (ft_isspace(data->map[i][j]) && j > 0
+					&& data->map[i][j - 1] && !ft_strchr("1 ", data->map[i][j
+						- 1])) || (ft_isspace(data->map[i][j])
+					&& i < data->nb_of_map_lines - 1 && data->map[i + 1][j]
+					&& !ft_strchr("1 ", data->map[i + 1][j]))
 				|| (ft_isspace(data->map[i][j]) && i > 0 && data->map[i - 1][j]
 					&& !ft_strchr("1 ", data->map[i - 1][j])))
 				return (print_error("Invalid map: map is open.", NULL));

@@ -27,7 +27,7 @@ int	check_ext(char *str, char *ext)
 	if (ft_strchr(str, '.'))
 		if (!strncmp(ft_strrchr(str, '.'), ext, 5))
 			return (SUCCESS);
-	return(print_error("Invalid file extension: ", str));
+	return (print_error("Invalid file extension: ", str));
 }
 
 void	free_str_arr(char **arr)
