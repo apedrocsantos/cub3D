@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:49:45 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/21 22:06:53 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_line
 typedef struct s_data
 {
 	char				*file;
+	int					fd;
 	t_rgb				*floor;
 	t_rgb				*ceiling;
 	char				**map;
@@ -142,25 +143,19 @@ typedef struct s_data
 
 // PARSING
 
+int						parsing(t_data *data);
 int						check_ext(char *str, char *ext);
-int						read_cub(t_data *data, int fd);
-int						get_map(char *line, int fd, t_data *data,
+int						read_cub(t_data *data);
+int						get_map(char *line, t_data *data,
 							char *first_line);
 int						valid_line(char *line);
 void					init_data_map(t_data *data, int line_nb, int line_len,
 							char *first_line);
 int						store_map(char *first_line, t_data *data);
 int						check_values(char **arr);
-char					*open_cub(int fd);
 int						check_extensions(t_cardinal_image *img);
 void					free_map(char **map);
-
-// MAP CHECK
-
 int						map_check(t_data *data, int i, int j);
-
-// UTILS
-
 void					free_data(t_data *data);
 void					free_str_arr(char **arr);
 int						print_error(char *str, char *str2);

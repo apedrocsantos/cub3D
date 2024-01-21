@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:26:03 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:29:44 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 19:59:01 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void	leave_on_error(t_data *data, char *error_statement)
 {
-	printf("[ERROR_HANDLER]:%d %s\n", data->map[0][0], error_statement);
+	print_error(error_statement, NULL);
+	free_data(data);
 	exit(ERROR_CODE);
 }

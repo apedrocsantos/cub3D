@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:27:57 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/04/23 18:36:13 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 10:36:51 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	ft_atoi(const char *nptr)
 
 	sign = 1;
 	result = 0;
+	if (!nptr)
+		return (0);
 	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13))
 		nptr++;
-	if (*nptr == '+' || *nptr == '-')
+	if (*nptr && (*nptr == '+' || *nptr == '-'))
 	{
 		if (*nptr == '-')
 			sign *= -1;

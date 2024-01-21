@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:54 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:31:32 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:07:16 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_playermap_start_pos(t_data *data)
 				|| data->map[xi][yi] == 'W' || data->map[xi][yi] == 'E')
 			{
 				if (match == 1)
-					leave_on_error(data, "Multiple player initial positions!");
+					leave_on_error(data, "Multiple player initial positions.");
 				data->player.direction = data->map[xi][yi];
 				data->player.px = (double)(xi + 0.5);
 				data->player.py = (double)(yi + 0.5);
@@ -69,4 +69,6 @@ void	get_playermap_start_pos(t_data *data)
 		}
 		yi = -1;
 	}
+	if (match == 0)
+		leave_on_error(data, "Can't find player.");
 }

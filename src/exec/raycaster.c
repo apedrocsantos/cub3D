@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:28:03 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:44:46 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:09:25 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	init_raycaster(t_data *data)
 {
+	get_playermap_start_pos(data);
 	if (data->player.direction == 'N')
 		data->player.pa = (180);
 	else if (data->player.direction == 'S')
@@ -22,8 +23,6 @@ int	init_raycaster(t_data *data)
 		data->player.pa = (90);
 	else if (data->player.direction == 'W')
 		data->player.pa = (270);
-	else
-		leave_on_error(data, "Invalid player direction");
 	data->player.pdx = cos(deg_to_rad(data->player.pa));
 	data->player.plane_x = cos(deg_to_rad(data->player.pa - (90)));
 	data->player.plane_y = sin(deg_to_rad(data->player.pa - (90)));

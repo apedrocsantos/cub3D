@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:45:53 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/11/16 12:55:05 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 22:09:00 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	get_map(char *line, int fd, t_data *data, char *first_line)
+/**
+ * If line contains valid characters, increment number of lines.
+ * If current line length > previous line length, increase line length.
+*/
+
+int	get_map(char *line, t_data *data, char *first_line)
 {
 	int		line_len;
 
@@ -30,30 +35,9 @@ int	get_map(char *line, int fd, t_data *data, char *first_line)
 		if ((int)ft_strlen(line) > line_len)
 			line_len = ft_strlen(line);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(data->fd);
 	}
-	free (line);
 	init_data_map(data, data->nb_of_map_lines, line_len, first_line);
-	return (0);
-}
-
-int	find_chars(char *str, char *to_find)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	while (str[++i])
-	{
-		j = -1;
-		while (to_find[++j])
-		{
-			if (str[i] == to_find[j])
-				break ;
-		}
-		if (!to_find[j])
-			return (1);
-	}
 	return (0);
 }
 
@@ -61,7 +45,7 @@ int	find_chars(char *str, char *to_find)
  * Checks if first line and last line have chars different than '1' and ' '
  * While looping each line
  * 		Checks if first char is different than '1' and ' '
- *
+ *		If current char is space, check next, previous, above and below character. If they are not '1', returns error.
 */
 
 int	map_check(t_data *data, int i, int j)
@@ -69,23 +53,23 @@ int	map_check(t_data *data, int i, int j)
 	while (data->map[++i])
 	{
 		if (i == 0 || i == data->nb_of_map_lines - 1)
-			if (find_chars(data->map[i], "1 "))
-				return (print_error("Invalid map. Check line: ", data->map[i]));
+			if (ft_strchr("1 ", &data->map[i]))
+				return (print_error("Invalid map: map is open.", NULL));
 		j = -1;
 		while (data->map[i][++j])
 		{
 			if (j == 0 && (data->map[i][j] != '1') && (data->map[i][j] != ' '))
-				return (print_error("Invalid map. Check line: ", data->map[i]));
-			if ((data->map[i][j] == ' ' && j < (int)ft_strlen(data->map[i])
+				return (print_error("Invalid map: map is open.", NULL));
+			if ((ft_isspace(data->map[i][j]) && j < (int)ft_strlen(data->map[i])
 				&& data->map[i][j + 1] && !ft_strchr("1 ", data->map[i][j
-					+ 1])) || (data->map[i][j] == ' ' && j > 0
+					+ 1])) || (ft_isspace(data->map[i][j]) && j > 0
 				&& data->map[i][j - 1] && !ft_strchr("1 ", data->map[i][j
-					- 1])) || (data->map[i][j] == ' '
+					- 1])) || (ft_isspace(data->map[i][j])
 				&& i < data->nb_of_map_lines - 1 && data->map[i + 1][j]
 				&& !ft_strchr("1 ", data->map[i + 1][j]))
-				|| (data->map[i][j] == ' ' && i > 0 && data->map[i - 1][j]
+				|| (ft_isspace(data->map[i][j]) && i > 0 && data->map[i - 1][j]
 					&& !ft_strchr("1 ", data->map[i - 1][j])))
-				return (print_error("Invalid map. Check line: ", data->map[i]));
+				return (print_error("Invalid map: map is open.", NULL));
 		}
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:52 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:29:55 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:08:38 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int	event_handler(t_data *data)
 
 int	exec(t_data *data)
 {
-	init_frame(data);
 	init_raycaster(data);
+	init_frame(data);
 	event_handler(data);
 	return (SUCCESS);
 }

@@ -3,31 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:47:22 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:04:49 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_rgb	*check_rgb(char *str)
+/*
+Split string at commas. Check if nb_substrings is 3 (RGB). Check the values of 
+each string and assign them to the corresponding data field.
+*/
+
+t_rgb *check_rgb(char *str)
 {
 	int		i;
 	char	**arr;
-	t_rgb	*rgb;
+	t_rgb *rgb;
 
 	i = 0;
 	arr = ft_split(str, ',');
 	while (arr[i])
 		i++;
-	if (i != 3 || !check_values(arr))
+	if (i != 3)
+	{
+		print_error("Invalid RGB values.", NULL);
+		free_str_arr(arr);
+		return (NULL);
+	}
+	if (check_values(arr))
 	{
 		free_str_arr(arr);
 		return (NULL);
 	}
 	rgb = malloc(sizeof(t_rgb));
+	if (!rgb)
+		return (NULL);
 	rgb->red = ft_atoi(arr[0]);
 	rgb->green = ft_atoi(arr[1]);
 	rgb->blue = ft_atoi(arr[2]);
@@ -35,97 +48,116 @@ t_rgb	*check_rgb(char *str)
 	return (rgb);
 }
 
-char	*check_path(char *str)
+/*
+*Ignore spaces, check for multiple strings, if just one string, assign it to corresponding field.
+*/
+
+int	check_path(t_data *data, char *str, int dir)
 {
 	char	*new;
 	int		i;
 
 	i = 0;
 	new = ft_strtrim(str, "\f\r\t\v ");
+	if (!new)
+		return (print_error("Empty path.", NULL));
 	while (new[i] && !ft_strchr("\f\r\t\v ", new[i]))
 		i++;
-	while (new[i] && new[i] == ' ')
-		i++;
 	if (!new[i])
-		return (new);
+	{
+		data->cardinal_image[dir].path = new;
+		return (SUCCESS);
+	}
 	free(new);
-	print_error("Invalid path.", NULL);
-	return (NULL);
+	return(print_error("Invalid path.", str));
 }
 
 int	get_file_path(t_data *data, char *line)
 {
 	if (!ft_strncmp(line, "NO ", 3) && !data->cardinal_image[NORTH].path)
-		data->cardinal_image[NORTH].path = check_path(&line[3]);
+		return(check_path(data, &line[3], NORTH));
 	else if (!ft_strncmp(line, "SO ", 3) && !data->cardinal_image[SOUTH].path)
-		data->cardinal_image[SOUTH].path = check_path(&line[3]);
+		return(check_path(data, &line[3], SOUTH));
 	else if (!ft_strncmp(line, "WE ", 3) && !data->cardinal_image[WEST].path)
-		data->cardinal_image[WEST].path = check_path(&line[3]);
+		return(check_path(data, &line[3], WEST));
 	else if (!ft_strncmp(line, "EA ", 3) && !data->cardinal_image[EAST].path)
-		data->cardinal_image[EAST].path = check_path(&line[3]);
+		return(check_path(data, &line[3], EAST));
 	else if (!ft_strncmp(line, "F ", 2) && !data->floor)
-		data->floor = check_rgb(&line[2]);
-	else if (!ft_strncmp(line, "C ", 2) && !data->ceiling)
-		data->ceiling = check_rgb(&line[2]);
-	else
 	{
-		print_error("Duplicate values.", NULL);
-		return (1);
+		data->floor = check_rgb(&line[2]);
+		if (!data->floor)
+			return (ERROR);
 	}
-	return (0);
+	else if (!ft_strncmp(line, "C ", 2) && !data->ceiling)
+	{
+		data->ceiling = check_rgb(&line[2]);
+		if (!data->ceiling)
+			return (ERROR);
+	}
+	else
+		return(print_error("Duplicate values.", NULL));
+	return (SUCCESS);
 }
+
+/**
+ * Check each line for "NO ", "SO ", "EA ", "WE ", "F " and "C ", in any order.
+ * If a different string is found and one or more of the fields is empty, returns error.
+ * Else, all fields are present, and returns 2.
+*/
 
 int	check_line(t_data *data, char *line, t_cardinal_image *img)
 {
 	int	i;
 
 	i = 0;
-	while (line[i] == ' ')
+	while (ft_isspace(line[i]))
 		i++;
-	if (line[i])
+	if (!line[i])
+		return (SUCCESS);
+	if (!strncmp(&line[i], "NO ", 3) || !strncmp(&line[i], "SO ", 3)
+		|| !strncmp(&line[i], "WE ", 3) || !strncmp(&line[i], "EA ", 3)
+		|| !strncmp(&line[i], "F ", 2) || !strncmp(&line[i], "C ", 2))
 	{
-		if (!strncmp(&line[i], "NO ", 3) || !strncmp(&line[i], "SO ", 3)
-			|| !strncmp(&line[i], "WE ", 3) || !strncmp(&line[i], "EA ", 3)
-			|| !strncmp(&line[i], "F ", 2) || !strncmp(&line[i], "C ", 2))
-		{
-			if (get_file_path(data, &line[i]))
-				return (1);
-		}
-		else if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
-			|| !img[WEST].path || !data->ceiling || !data->floor)
-			return (print_error("Invalid cub settings. Check rules.", NULL));
-		else
-			return (2);
+		if (get_file_path(data, &line[i]))
+			return(ERROR);
 	}
-	return (0);
+	else if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
+		|| !img[WEST].path || !data->ceiling || !data->floor)
+		return (print_error("Invalid data. Try again.", NULL));
+	else
+		return (2);
+	return (SUCCESS);
 }
 
 /*
  * Reads each line of the cub file.
- * check_line function checks if NO, SO< WE, EA, F and C exist and stores them.
+ * check_line function checks if NO, SO, WE, EA, F and C exist and stores them.
  * If all values are valid, check_line returns 2, and get_map begins.
  */
-int	read_cub(t_data *data, int fd)
+int	read_cub(t_data *data)
 {
 	char	*line;
 	int		a;
 
-	line = open_cub(fd);
+	line = get_next_line(data->fd);
 	if (!line)
-		return (1);
+		return(print_error("Empty file.", NULL));
 	while (line)
 	{
 		a = check_line(data, line, data->cardinal_image);
 		if (a == 2)
 		{
-			if (get_map(line, fd, data, ft_strdup(line)))
+			if (get_map(line, data, ft_strdup(line)))
 				return (1);
 		}
 		if (a != 2)
 			free(line);
-		if (a)
+		if (a != 0)
+		{
+			close(data->fd);	
 			return (a);
-		line = get_next_line(fd);
+		}
+		line = get_next_line(data->fd);
 	}
-	return (0);
+	return(print_error("No map found in file.", NULL));
 }

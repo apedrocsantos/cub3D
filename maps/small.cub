@@ -1,0 +1,18 @@
+     NO       ./assets/wall.xpm
+F 255,0,80
+SO ./assets/wall1.xpm
+
+
+
+WE ./assets/wall2.xpm
+EA ./assets/wall3.xpm
+
+
+
+C +0    ,  120   ,255
+
+
+
+1111
+10N01
+111

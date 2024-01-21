@@ -3,56 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 22:11:40 by anda-cun          #+#    #+#             */
-/*   Updated: 2023/11/16 12:54:48 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 23:33:49 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+/**
+ * get length of string until '\0' or space.
+ * Check if there are no more chars after space(s).
+ * legth has to be <= 4 (to include possible '+').
+ * Check first char for digit or '+'.
+ * Check if all the other chars are numbers.
+*/
+
 int	valid_number(char *str)
 {
 	int	i;
+	int nb_len;
 
-	i = 0;
-	if (str && *str && (ft_isdigit(str[0]) || str[0] == '+'))
+	i = -1;
+	nb_len = 0;
+	if (!str)
+		return (ERROR);
+	while (str[nb_len] && !ft_isspace(str[nb_len]))
+		nb_len++;
+	i = nb_len;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i])
+		return (ERROR);
+	i = -1;
+	if (nb_len <= 4 && (ft_isdigit(str[0]) || str[0] == '+'))
 	{
-		while (str[++i])
+		if (str[0] == '+')
+			i++;
+		while (++i < nb_len)
 			if (!ft_isdigit(str[i]))
-				return (0);
+				return (ERROR);
 	}
 	else
-		return (0);
-	return (1);
+		return (ERROR);
+	return (SUCCESS);
 }
+
+/**
+ * Ignore spaces. Check if string is a valid positive number and smaller than 255.
+*/
 
 int	check_values(char **arr)
 {
 	int		i;
-	char	*check;
+	int		j;
 
 	i = -1;
 	while (arr[++i])
 	{
-		check = ft_strtrim(arr[i], " ");
-		if (!valid_number(check))
-		{
-			free(check);
-			return (0);
-		}
-		free(check);
+		j = 0;
+		while(ft_isspace(arr[i][j]))
+			j++;
+		if (!arr[i][j])
+			return (print_error("Missing RGB values.", NULL));
+		if (valid_number(&arr[i][j]) || ft_atoi(&arr[i][j]) > 255)
+			return (print_error("Invalid RGB values.", NULL));
 	}
-	return (1);
+	return (SUCCESS);
 }
 
+
+/**
+ * Reopens the .cub file and finds the first line of the map.
+ * Then adds each line to the string array.
+*/
 int	store_map(char *first_line, t_data *data)
 {
-	int		fd;
 	char	*line;
 	int		i;
 	int		j;
+	int fd;
 
 	i = 0;
 	fd = open(data->file, O_RDONLY);
@@ -73,8 +104,14 @@ int	store_map(char *first_line, t_data *data)
 		line = get_next_line(fd);
 	}
 	free(line);
+	close(fd);
 	return (0);
 }
+
+/**
+ * Creates array of strings to store map, with max line length of map fond previously.
+ * Fills empty array with spaces.
+*/
 
 void	init_data_map(t_data *data, int line_nb, int line_len, char *first_line)
 {
@@ -90,6 +127,10 @@ void	init_data_map(t_data *data, int line_nb, int line_len, char *first_line)
 	store_map(first_line, data);
 }
 
+/**
+ * Checks if line is valid (char "\f\r\t\v ").
+*/
+
 int	valid_line(char *line)
 {
 	int		i;
@@ -98,10 +139,10 @@ int	valid_line(char *line)
 	i = -1;
 	check_empty = ft_strtrim(line, "\f\r\t\v ");
 	if (!check_empty)
-		return (print_error("Invalid character in map.", NULL));
+		return (print_error("Invalid map: empty line.", NULL));
 	free(check_empty);
 	while (line[++i])
 		if (!ft_strchr("10NSWE ", line[i]))
-			return (print_error("Invalid character in map.", NULL));
+			return (print_error("Invalid map: invalid character in map.", NULL));
 	return (0);
 }

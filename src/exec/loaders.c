@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loaders.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:32:19 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:08:18 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	load_cardinal_images(t_data *data)
 
 int	init_frame(t_data *data)
 {
-	get_playermap_start_pos(data);
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		close_window(data, "Error\nError creating window.", 10);
