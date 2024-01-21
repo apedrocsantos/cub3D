@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/21 23:57:25 by anda-cun          #+#    #+#             */
+/*   Updated: 2024/01/21 23:57:42 by anda-cun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int ft_isspace(int c)
+int	ft_isspace(int c)
 {
-    if (c && ft_strchr(" \t\n\v\f\r", c))
-        return (1);
-    return (0);
+	if (c && ft_strchr(" \t\n\v\f\r", c))
+		return (1);
+	return (0);
 }
