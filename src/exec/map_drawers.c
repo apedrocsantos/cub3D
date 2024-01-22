@@ -22,7 +22,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 
 void	draw_texture_line(int draw_start, int draw_end, t_data *data,
-		t_camera *camera, int x)
+		t_camera *camera)
 {
 	t_line	line;
 	int		direction;
@@ -44,7 +44,7 @@ void	draw_texture_line(int draw_start, int draw_end, t_data *data,
 		line.pos.px = line.tex_x;
 		line.pos.py = line.tex_y;
 		color = get_img_color(data->cardinal_image[direction], &(line.pos));
-		my_mlx_pixel_put(data, x, draw_start, color);
+		my_mlx_pixel_put(data, camera->x, draw_start, color);
 	}
 }
 
@@ -53,16 +53,17 @@ static void	draw_floor_and_ceiling(t_data *data, int x, int draw_s, int draw_e)
 	int	floor;
 	int	ceiling;
 	int	i;
-
+	if (draw_e >= INITIAL_YSIZE || draw_s > draw_e || draw_e < 0 || draw_s < 0)
+		return ;
 	floor = create_trgb(0, data->floor->red, data->floor->green,
 			data->floor->blue);
 	ceiling = create_trgb(0, data->ceiling->red, data->ceiling->green,
 			data->ceiling->blue);
-	i = 0;
-	while (i++ < draw_s)
+	i = -1;
+	while (++i < draw_s)
 		my_mlx_pixel_put(data, x, i, ceiling);
 	i = draw_e;
-	while (i++ < INITIAL_YSIZE)
+	while (i++ < INITIAL_YSIZE- 1)
 		my_mlx_pixel_put(data, x, i, floor);
 }
 
@@ -84,7 +85,7 @@ int	draw_crosshair(t_data *data)
 	return (SUCCESS);
 }
 
-int	draw_stuff(t_data *data, int x, t_camera *camera)
+int	draw_stuff(t_data *data, t_camera *camera)
 {
 	int	draw_start;
 	int	draw_end;
@@ -102,7 +103,7 @@ int	draw_stuff(t_data *data, int x, t_camera *camera)
 		camera->wall_x = data->player.px + camera->perp_wall_dist
 			* camera->ray_dir_x;
 	camera->wall_x -= floor((camera->wall_x));
-	draw_floor_and_ceiling(data, x, draw_start, draw_end);
-	draw_texture_line(draw_start, draw_end, data, camera, x);
+	draw_floor_and_ceiling(data, camera->x, draw_start, draw_end);
+	draw_texture_line(draw_start, draw_end, data, camera);
 	return (SUCCESS);
 }
