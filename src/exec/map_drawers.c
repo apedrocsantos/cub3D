@@ -53,8 +53,8 @@ static void	draw_floor_and_ceiling(t_data *data, int x, int draw_s, int draw_e)
 	int	floor;
 	int	ceiling;
 	int	i;
-	if (draw_e >= INITIAL_YSIZE || draw_s > draw_e || draw_e < 0 || draw_s < 0)
-		return ;
+	// if (draw_e >= INITIAL_YSIZE || draw_s > draw_e || draw_e < 0 || draw_s < 0)
+	// 	return ;
 	floor = create_trgb(0, data->floor->red, data->floor->green,
 			data->floor->blue);
 	ceiling = create_trgb(0, data->ceiling->red, data->ceiling->green,

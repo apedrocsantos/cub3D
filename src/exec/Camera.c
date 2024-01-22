@@ -39,9 +39,19 @@ int	valid_move(t_data *data, int pressed_key)
 	}
 	else
 		return (FAILURE);
-	if (data->map[(int)x][(int)y] != '1')
-		return (SUCCESS);
-	return (FAILURE);
+	int a = (int)x;
+	int b = (int)y;
+	if (floor(data->player.px) < floor(x + 0.1))
+		a = floor(data->player.px) + 1;
+	else if (floor(data->player.px) > floor(x + 0.1))
+		a = floor(data->player.px) - 1;
+	if (floor(data->player.py) != floor(y + 0.1))
+		b = floor(data->player.py) + 1;
+	else if (floor(data->player.py) != floor(y + 0.1))
+		b = floor(data->player.py) - 1;
+	if (data->map[a][b] == '1')
+		return (FAILURE);
+	return (SUCCESS);		
 }
 
 void	render_map(t_data *data)
@@ -72,7 +82,8 @@ void	render_map(t_data *data)
 		calc_side_dist(&camera, data);
 		search_hit(hit, &camera, data);
 		camera.line_height = (INITIAL_YSIZE / camera.perp_wall_dist);
-		draw_stuff(data, x, &camera);
+		camera.x = x;
+		draw_stuff(data, &camera);
 	}
 	draw_crosshair(data);
 }

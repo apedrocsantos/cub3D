@@ -15,8 +15,8 @@
 # define CUB3D_H
 
 # define GAME_NAME "cub3d"
-# define INITIAL_XSIZE 1920 // 960
-# define INITIAL_YSIZE 1080 // 540
+# define INITIAL_XSIZE 960 // 960
+# define INITIAL_YSIZE 540 // 540
 # define ERROR -1314
 # define PLAYER_SPEED 0.1
 # define CONSTANT_DISTANCE 0.5
@@ -70,6 +70,7 @@ typedef struct s_camera
 	int					step_x;
 	int					step_y;
 	int					side;
+	int					x;
 	double				wall_x;
 	double				line_height;
 }						t_camera;
@@ -185,7 +186,7 @@ int						valid_move(t_data *data, int pressed_key);
 ///
 int						draw_crosshair(t_data *data);
 void					render_map(t_data *data);
-int						draw_stuff(t_data *data, int x, t_camera *camera);
+int						draw_stuff(t_data *data, t_camera *camera);
 int						render_map_all(t_data *data);
 int						gettex_x(t_data *data, t_camera *camera);
 int						get_img_direction(t_data *data, t_camera *camera);
