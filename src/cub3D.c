@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:39:53 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:54:26 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/24 18:15:35 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ void	init_data(t_data *data, char *file_path)
 
 int	parsing(t_data *data)
 {
-	if (read_cub(data) != 2)
-		return (ERROR);
-	if (check_extensions(data->cardinal_image))
-		return (ERROR);
-	if (map_check(data, -1, -1))
-		return (ERROR);
+	if (read_cub(data, get_next_line(data->fd)) != 2)
+		return (FAILURE);
+	if (map_check(data, data->map, -1, -1))
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -50,10 +48,10 @@ int	main(int ac, char **av)
 	if (data.fd < 0)
 		return (print_error("Error opening file.", NULL));
 	init_data(&data, av[1]);
-	if (parsing(&data))
+	if (parsing(&data) == FAILURE)
 	{
 		free_data(&data);
-		return (ERROR);
+		return (FAILURE);
 	}
 	exec(&data);
 	free_data(&data);

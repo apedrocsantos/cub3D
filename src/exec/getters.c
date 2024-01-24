@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:54 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 20:07:16 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/23 18:08:43 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	get_playermap_start_pos(t_data *data)
 	int	match;
 
 	xi = -1;
-	yi = -1;
 	match = 0;
 	while (data->map[++xi] != NULL)
 	{
+		yi = -1;
 		while (data->map[xi][++yi] != '\0')
 		{
 			if (data->map[xi][yi] == 'N' || data->map[xi][yi] == 'S'
@@ -67,7 +67,6 @@ void	get_playermap_start_pos(t_data *data)
 				match = 1;
 			}
 		}
-		yi = -1;
 	}
 	if (match == 0)
 		leave_on_error(data, "Can't find player.");

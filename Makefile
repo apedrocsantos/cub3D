@@ -2,10 +2,9 @@ NAME = cub3D
 
 SRCS =	cub3D.c\
 		parsing/parsing.c\
-		parsing/map_utils.c\
-		parsing/parsing_etc.c\
-		parsing/map_check.c\
-		parsing/etc_utils.c\
+		parsing/validations.c\
+		parsing/map.c\
+		parsing/parsing_utils.c\
 		exec/exec.c\
 		exec/Camera.c\
 		exec/color_utils.c\
@@ -35,7 +34,7 @@ LIBS = -L /usr/local/lib libmlx.a -lXext -lX11 -ldl -pthread -lm
 
 all: $(NAME) 
 
-$(NAME): $(SRCS) $(LIBFT) $(LIBMLX)
+$(NAME): $(SRCS) $(LIBFT) $(LIBMLX) ./includes/cub3D.h
 	@$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIBFT) $(LIBMLX) $(LIBS) -o $(NAME) -g
 	@echo "Compilation OK."
 

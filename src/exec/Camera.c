@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   Camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/19 20:46:56 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:29:02 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
+
+int	check_squares(t_data *data, double x, double y)
+{
+	int	a;
+	int	b;
+
+	a = (int)x;
+	b = (int)y;
+	if (floor(data->player.px) < floor(x + 0.1))
+		a = floor(data->player.px) + 1;
+	else if (floor(data->player.px) > floor(x + 0.1))
+		a = floor(data->player.px) - 1;
+	if (floor(data->player.py) != floor(y + 0.1))
+		b = floor(data->player.py) + 1;
+	else if (floor(data->player.py) != floor(y + 0.1))
+		b = floor(data->player.py) - 1;
+	if (data->map[a][b] == '1')
+		return (FAILURE);
+	return (SUCCESS);
+}
 
 int	valid_move(t_data *data, int pressed_key)
 {
@@ -37,34 +57,17 @@ int	valid_move(t_data *data, int pressed_key)
 		x = (data->player.px + data->player.plane_x * PLAYER_SPEED);
 		y = (data->player.py + data->player.plane_y * PLAYER_SPEED);
 	}
-	else
-		return (FAILURE);
-	int a = (int)x;
-	int b = (int)y;
-	if (floor(data->player.px) < floor(x + 0.1))
-		a = floor(data->player.px) + 1;
-	else if (floor(data->player.px) > floor(x + 0.1))
-		a = floor(data->player.px) - 1;
-	if (floor(data->player.py) != floor(y + 0.1))
-		b = floor(data->player.py) + 1;
-	else if (floor(data->player.py) != floor(y + 0.1))
-		b = floor(data->player.py) - 1;
-	if (data->map[a][b] == '1')
-		return (FAILURE);
-	return (SUCCESS);		
+	return (check_squares(data, x, y));
 }
 
 void	render_map(t_data *data)
 {
-	int			x;
-	int			hit;
 	t_camera	camera;
 
-	x = -1;
-	hit = 0;
-	while (++x < INITIAL_XSIZE)
+	camera.x = -1;
+	while (++camera.x < INITIAL_XSIZE)
 	{
-		camera.camera_x = 2 * x / (double)INITIAL_XSIZE - 1;
+		camera.camera_x = 2 * camera.x / (double)INITIAL_XSIZE - 1;
 		camera.ray_dir_x = data->player.pdx + data->player.plane_x
 			* camera.camera_x;
 		camera.ray_dir_y = data->player.pdy + data->player.plane_y
@@ -80,10 +83,8 @@ void	render_map(t_data *data)
 		else
 			camera.delta_dist_y = fabs(1 / camera.ray_dir_y);
 		calc_side_dist(&camera, data);
-		search_hit(hit, &camera, data);
+		search_hit(0, &camera, data);
 		camera.line_height = (INITIAL_YSIZE / camera.perp_wall_dist);
-		camera.x = x;
 		draw_stuff(data, &camera);
 	}
-	draw_crosshair(data);
 }

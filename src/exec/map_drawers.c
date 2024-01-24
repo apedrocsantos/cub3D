@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:59 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:55:32 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/23 18:31:56 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static void	draw_floor_and_ceiling(t_data *data, int x, int draw_s, int draw_e)
 	int	floor;
 	int	ceiling;
 	int	i;
-	// if (draw_e >= INITIAL_YSIZE || draw_s > draw_e || draw_e < 0 || draw_s < 0)
-	// 	return ;
+
+	if (draw_e >= INITIAL_YSIZE || draw_s > draw_e || draw_e < 0 || draw_s < 0)
+		return ;
 	floor = create_trgb(0, data->floor->red, data->floor->green,
 			data->floor->blue);
 	ceiling = create_trgb(0, data->ceiling->red, data->ceiling->green,
@@ -63,7 +64,7 @@ static void	draw_floor_and_ceiling(t_data *data, int x, int draw_s, int draw_e)
 	while (++i < draw_s)
 		my_mlx_pixel_put(data, x, i, ceiling);
 	i = draw_e;
-	while (i++ < INITIAL_YSIZE- 1)
+	while (i++ < INITIAL_YSIZE - 1)
 		my_mlx_pixel_put(data, x, i, floor);
 }
 

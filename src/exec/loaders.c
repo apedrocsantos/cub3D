@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:27:58 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 20:08:18 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/23 18:29:22 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	render_map_all(t_data *data)
 {
 	render_map(data);
+	draw_crosshair(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->current_img.img, 0, 0);
 	return (SUCCESS);
 }

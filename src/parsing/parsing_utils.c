@@ -1,57 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_etc.c                                      :+:      :+:    :+:   */
+/*   etc_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 22:14:26 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 16:12:25 by ubuntu           ###   ########.fr       */
+/*   Created: 2023/10/23 16:37:55 by anda-cun          #+#    #+#             */
+/*   Updated: 2024/01/24 12:30:49 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	check_xpm(t_cardinal_image *img)
+int	print_error(char *str, char *str2)
 {
-	int	fd;
-
-	fd = open(img[NORTH].path, O_RDONLY);
-	if (fd != -1)
-		close(fd);
-	else
-		return (1);
-	fd = open(img[SOUTH].path, O_RDONLY);
-	if (fd != -1)
-		close(fd);
-	else
-		return (1);
-	fd = open(img[EAST].path, O_RDONLY);
-	if (fd != -1)
-		close(fd);
-	else
-		return (1);
-	fd = open(img[WEST].path, O_RDONLY);
-	if (fd != -1)
-		close(fd);
-	else
-		return (1);
-	return (0);
+	ft_putendl_fd("Error", 2);
+	ft_putstr_fd(str, 2);
+	if (str2)
+		ft_putstr_fd(str2, 2);
+	ft_putstr_fd("\n", 2);
+	return (1);
 }
 
-int	check_extensions(t_cardinal_image *img)
+void	free_str_arr(char **arr)
 {
-	if (check_ext(img[NORTH].path, ".xpm"))
-		return (1);
-	if (check_ext(img[SOUTH].path, ".xpm"))
-		return (1);
-	if (check_ext(img[WEST].path, ".xpm"))
-		return (1);
-	if (check_ext(img[EAST].path, ".xpm"))
-		return (1);
-	if (check_xpm(img))
-		return (print_error("Can't access xpm file.", NULL));
-	return (0);
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
+void	free_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+		free(map[i++]);
+	free(map);
 }
 
 void	free_data(t_data *data)

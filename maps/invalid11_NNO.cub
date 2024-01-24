@@ -1,11 +1,11 @@
-     NNO       ./path_to_the_north_texture.xpm
+     NNO       ./assets/wall.xpm
 F 220,100,03
-SO ./nfs/home/path_to_the_south_texture/ai.xpm
+SO ./assets/wall1.xpm
 
 
 
-WE ./path_to_the_west_texture.xpm
-EA ./path_to_the_east_texture.xpm
+WE ./assets/wall2.xpm
+EA ./assets/wall3.xpm
 
 
 

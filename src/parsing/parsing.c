@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/21 23:42:59 by ubuntu           ###   ########.fr       */
+/*   Updated: 2024/01/24 18:15:49 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ t_rgb	*check_rgb(char **arr)
 	i = 0;
 	while (arr[i])
 		i++;
-	if (i != 3)
+	if (i != 3 || check_rgb_values(arr) == FAILURE)
 	{
 		print_error("Invalid RGB values.", NULL);
-		free_str_arr(arr);
-		return (NULL);
-	}
-	if (check_values(arr))
-	{
 		free_str_arr(arr);
 		return (NULL);
 	}
@@ -62,7 +57,7 @@ int	check_path(t_data *data, char *str, int dir)
 		return (print_error("Empty path.", NULL));
 	while (new[i] && !ft_strchr("\f\r\t\v ", new[i]))
 		i++;
-	if (!new[i])
+	if (!new[i] && !check_file(new))
 	{
 		data->cardinal_image[dir].path = new;
 		return (SUCCESS);
@@ -71,7 +66,7 @@ int	check_path(t_data *data, char *str, int dir)
 	return (print_error("Invalid path.", str));
 }
 
-int	get_file_path(t_data *data, char *line)
+int	parse_line(t_data *data, char *line)
 {
 	if (!ft_strncmp(line, "NO ", 3) && !data->cardinal_image[NORTH].path)
 		return (check_path(data, &line[3], NORTH));
@@ -85,13 +80,13 @@ int	get_file_path(t_data *data, char *line)
 	{
 		data->floor = check_rgb(ft_split(&line[2], ','));
 		if (!data->floor)
-			return (ERROR);
+			return (FAILURE);
 	}
 	else if (!ft_strncmp(line, "C ", 2) && !data->ceiling)
 	{
 		data->ceiling = check_rgb(ft_split(&line[2], ','));
 		if (!data->ceiling)
-			return (ERROR);
+			return (FAILURE);
 	}
 	else
 		return (print_error("Duplicate values.", NULL));
@@ -117,16 +112,11 @@ int	check_line(t_data *data, char *line, t_cardinal_image *img)
 	if (!strncmp(&line[i], "NO ", 3) || !strncmp(&line[i], "SO ", 3)
 		|| !strncmp(&line[i], "WE ", 3) || !strncmp(&line[i], "EA ", 3)
 		|| !strncmp(&line[i], "F ", 2) || !strncmp(&line[i], "C ", 2))
-	{
-		if (get_file_path(data, &line[i]))
-			return (ERROR);
-	}
-	else if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
+		return (parse_line(data, &line[i]));
+	if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
 		|| !img[WEST].path || !data->ceiling || !data->floor)
 		return (print_error("Invalid data. Try again.", NULL));
-	else
-		return (2);
-	return (SUCCESS);
+	return (2);
 }
 
 /*
@@ -134,12 +124,10 @@ int	check_line(t_data *data, char *line, t_cardinal_image *img)
  * check_line function checks if NO, SO, WE, EA, F and C exist and stores them.
  * If all values are valid, check_line returns 2, and get_map begins.
  */
-int	read_cub(t_data *data)
+int	read_cub(t_data *data, char *line)
 {
-	char	*line;
 	int		a;
 
-	line = get_next_line(data->fd);
 	if (!line)
 		return (print_error("Empty file.", NULL));
 	while (line)
@@ -147,8 +135,11 @@ int	read_cub(t_data *data)
 		a = check_line(data, line, data->cardinal_image);
 		if (a == 2)
 		{
-			if (get_map(line, data, ft_strdup(line)))
+			if (get_map(line, data, ft_strdup(line)) == FAILURE)
+			{
+				close(data->fd);
 				return (1);
+			}
 		}
 		if (a != 2)
 			free(line);
