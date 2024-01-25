@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:21:00 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/24 17:32:14 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:19:14 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	check_file(char *str)
 		if (fd != -1)
 			close(fd);
 		else
-			return (print_error("Can't access xpm file ", str));
+			return (print_error("Can't access xpm file: ", str));
 		i++;
 	}
 	return (0);

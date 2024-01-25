@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:28:42 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/24 18:16:07 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:32:30 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define ERROR -1314
 # define PLAYER_SPEED 0.1
 # define CONSTANT_DISTANCE 0.5
-# define CAMERA_SPEED 1.5
+# define CAMERA_SPEED 1.8
 # define INVALID_POSITION -1
 
 # include "../minilibx-linux/mlx.h"

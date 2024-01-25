@@ -1,13 +1,13 @@
      NO       ./assets/wall.xpm            
-F                  252              ,0,  2         
+F             +030              ,    250    , 50            
 SO     ./assets/wall1.xpm     
 
 WE ./assets/wall2.xpm
-EA ./assets/wall3.xpm
+EA ./assets/wall3.xpm     
 
 
 
-C +0    ,  0   ,255
+C +0    ,  0   , 255  
 
      11111     
      11001

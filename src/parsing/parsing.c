@@ -6,7 +6,7 @@
 /*   By: anda-cun <anda-cun@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:21:08 by anda-cun          #+#    #+#             */
-/*   Updated: 2024/01/24 18:15:49 by anda-cun         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:34:18 by anda-cun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,18 @@ int	check_path(t_data *data, char *str, int dir)
 		return (print_error("Empty path.", NULL));
 	while (new[i] && !ft_strchr("\f\r\t\v ", new[i]))
 		i++;
-	if (!new[i] && !check_file(new))
+	if (!new[i])
 	{
+		if (check_file(new))
+		{
+			free(new);
+			return (FAILURE);
+		}
 		data->cardinal_image[dir].path = new;
 		return (SUCCESS);
 	}
 	free(new);
-	return (print_error("Invalid path.", str));
+	return (print_error("Invalid path:", str));
 }
 
 int	parse_line(t_data *data, char *line)
@@ -115,7 +120,7 @@ int	check_line(t_data *data, char *line, t_cardinal_image *img)
 		return (parse_line(data, &line[i]));
 	if (!img[NORTH].path || !img[SOUTH].path || !img[EAST].path
 		|| !img[WEST].path || !data->ceiling || !data->floor)
-		return (print_error("Invalid data. Try again.", NULL));
+		return (print_error("Missing data. Try again.", NULL));
 	return (2);
 }
 
@@ -150,5 +155,5 @@ int	read_cub(t_data *data, char *line)
 		}
 		line = get_next_line(data->fd);
 	}
-	return (print_error("No map found in file.", NULL));
+	return (print_error("File is incomplete.", NULL));
 }
