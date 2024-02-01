@@ -37,6 +37,9 @@ int	valid_move(t_data *data, int pressed_key)
 	double	x;
 	double	y;
 
+	x = data->player.px;
+	y = data->player.py;
+
 	if (pressed_key == W)
 	{
 		x = (data->player.px + data->player.pdx * PLAYER_SPEED);

@@ -34,7 +34,7 @@ LIBS = -L /usr/local/lib libmlx.a -lXext -lX11 -ldl -pthread -lm
 
 all: $(NAME) 
 
-$(NAME): $(SRCS) $(LIBFT) $(LIBMLX) ./includes/cub3D.h
+$(NAME): $(SRCS) $(LIBFT) $(LIBMLX)
 	@$(CC) $(CFLAGS) $^ $(INCLUDES) $(LIBFT) $(LIBMLX) $(LIBS) -o $(NAME) -g
 	@echo "Compilation OK."
 
