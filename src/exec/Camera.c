@@ -37,14 +37,10 @@ int	valid_move(t_data *data, int pressed_key)
 	double	x;
 	double	y;
 
-	x = data->player.px;
-	y = data->player.py;
-
+	x = (data->player.px + data->player.pdx * PLAYER_SPEED);
+	y = (data->player.py + data->player.pdy * PLAYER_SPEED);
 	if (pressed_key == W)
-	{
-		x = (data->player.px + data->player.pdx * PLAYER_SPEED);
-		y = (data->player.py + data->player.pdy * PLAYER_SPEED);
-	}
+		return (check_squares(data, x, y));
 	else if (pressed_key == S)
 	{
 		x = (data->player.px - data->player.pdx * PLAYER_SPEED);
@@ -60,6 +56,8 @@ int	valid_move(t_data *data, int pressed_key)
 		x = (data->player.px + data->player.plane_x * PLAYER_SPEED);
 		y = (data->player.py + data->player.plane_y * PLAYER_SPEED);
 	}
+	else
+		return (FAILURE);
 	return (check_squares(data, x, y));
 }
 

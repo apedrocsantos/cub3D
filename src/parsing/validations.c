@@ -20,15 +20,20 @@
 
 int	valid_number(char *str)
 {
+	int i;
+
+	i = 0;
 	if (!str)
 		return (FAILURE);
-	if (*str == '+')
-		str++;
-	while (str && ft_isdigit(*str))
-		str++;
-	while (str && ft_isspace(*str))
-		str++;
-	if (*str)
+	if (str[i] == '+')
+		i++;
+	while (str && ft_isdigit(str[i]))
+		i++;
+	if (i > 3)
+		return (FAILURE);
+	while (str && ft_isspace(str[i]))
+		i++;
+	if (str[i])
 		return (FAILURE);
 	return (SUCCESS);
 }
