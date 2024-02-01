@@ -61,7 +61,7 @@ static void	draw_floor_and_ceiling(t_data *data, int x, int draw_s, int draw_e)
 	ceiling = create_trgb(0, data->ceiling->red, data->ceiling->green,
 			data->ceiling->blue);
 	i = -1;
-	while (++i < draw_s)
+	while (++i <= draw_s)
 		my_mlx_pixel_put(data, x, i, ceiling);
 	i = draw_e;
 	while (i++ < INITIAL_YSIZE - 1)

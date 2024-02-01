@@ -17,16 +17,16 @@ int	check_squares(t_data *data, double x, double y)
 	int	a;
 	int	b;
 
-	a = (int)x;
-	b = (int)y;
-	if (floor(data->player.px) < floor(x + 0.1))
-		a = floor(data->player.px) + 1;
-	else if (floor(data->player.px) > floor(x + 0.1))
-		a = floor(data->player.px) - 1;
-	if (floor(data->player.py) != floor(y + 0.1))
-		b = floor(data->player.py) + 1;
-	else if (floor(data->player.py) != floor(y + 0.1))
-		b = floor(data->player.py) - 1;
+	a = floor(data->player.px);
+	b = floor(data->player.py);
+	if (x - floor(x) <= PLAYER_SPEED)
+		a = (int)(x - PLAYER_SPEED);
+	else if (x - ceil(x) <= PLAYER_SPEED)
+		a = (int)(x + PLAYER_SPEED);
+	if (y - floor(y) <= PLAYER_SPEED)
+		b = (int)(y - PLAYER_SPEED);
+	else if (y - ceil(y) <= PLAYER_SPEED)
+		b = (int)(y + PLAYER_SPEED);
 	if (data->map[a][b] == '1')
 		return (FAILURE);
 	return (SUCCESS);

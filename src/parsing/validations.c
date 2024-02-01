@@ -20,7 +20,7 @@
 
 int	valid_number(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)
@@ -29,8 +29,6 @@ int	valid_number(char *str)
 		i++;
 	while (str && ft_isdigit(str[i]))
 		i++;
-	if (i > 3)
-		return (FAILURE);
 	while (str && ft_isspace(str[i]))
 		i++;
 	if (str[i])
@@ -56,7 +54,8 @@ int	check_rgb_values(char **arr)
 			j++;
 		if (!arr[i][j])
 			return (FAILURE);
-		if (valid_number(&arr[i][j]) || ft_atoi(&arr[i][j]) > 255)
+		if (valid_number(&arr[i][j]) || ft_atoi(&arr[i][j]) > 255
+			|| ft_atoi(&arr[i][j]) < 0)
 			return (FAILURE);
 	}
 	return (SUCCESS);
