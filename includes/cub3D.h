@@ -14,9 +14,9 @@
 
 # define CUB3D_H
 
-# define GAME_NAME "cub3d"
-# define INITIAL_XSIZE 960 // 960
-# define INITIAL_YSIZE 540 // 540
+# define GAME_NAME "cub3D"
+# define INITIAL_XSIZE 1920 // 960
+# define INITIAL_YSIZE 1080 // 540
 # define ERROR -1314
 # define PLAYER_SPEED 0.1
 # define CONSTANT_DISTANCE 0.5
@@ -152,7 +152,7 @@ int						get_map(char *line, t_data *data,
 int						valid_map_line(char *line);
 void					init_data_map(t_data *data, int line_nb, int line_len,
 							char *first_line);
-void						store_map(char *first_line, t_data *data);
+void					store_map(char *first_line, t_data *data);
 int						check_rgb_values(char **arr);
 int						check_file(char *str);
 void					free_map(char **map);
